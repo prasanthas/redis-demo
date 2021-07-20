@@ -28,7 +28,7 @@ public class RedisTransaction {
                 Account credit = Account.builder().key("credit").type("credit").id(2).amount(2.2).build();
 
                 operations.multi();
-//                operations.watch("cash"); // THIS DOES NOT WORK. throw new UnsupportedOperationException(); It is in LettuceConnection
+                operations.watch("cash"); // THIS DOES NOT WORK. throw new UnsupportedOperationException(); It is in LettuceConnection
                 HashOperations hashOperations = operations.opsForHash();
                 hashOperations.put("ACCOUNT", cash.getKey(), cash);
                 hashOperations.put("ACCOUNT", credit.getKey(), credit);

@@ -19,7 +19,7 @@ public class RedisTransaction {
     }
 
 
-    public void inTransaction() {
+    public void inTransaction(Integer time) {
 
         //execute a transaction
         List<Object> txResults = (List<Object>) hashOperation.getRedisTemplate().execute(new SessionCallback<List<Object>>() {
@@ -38,7 +38,7 @@ public class RedisTransaction {
 
                 try {
                     System.err.println("CALLING SLEEP");
-                    Thread.sleep(10000);
+                    Thread.sleep(time);
                     System.err.println("END OF SLEEP");
                 } catch (InterruptedException e) {
                     e.printStackTrace();

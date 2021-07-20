@@ -83,15 +83,6 @@ public class RedisMultiThreadTransactionRetryTest {
         hashOperation.putValue(creditAccount.getType(), creditAccount.getKey(), creditAccount);
     }
 
-//    @Async
-    public void printThreadCall(Integer time) throws InterruptedException {
-        Thread.sleep(time);
-        System.err.println("TIME: "+time+":::"+Thread.currentThread().getName());
-    }
-
-
-
-
     public void readRedis() {
         Account cashAccount = Account.builder().id(1).amount(1.1).type("Cash").key("1").build();
         Account creditAccount = Account.builder().id(2).amount(2.2).type("Credit").key("2").build();

@@ -1,8 +1,6 @@
 package au.com.flexisoft.redis;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +25,6 @@ public class RedisTransactionThread implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("Inside run");
-
-		/*redisMultiThreadTransactionRetryTest.populateRedis();
-		redisMultiThreadTransactionRetryTest.readRedis();*/
 
 		Account cashAccount = Account.builder().id(1).amount(11.1112).type("Cash").key("1").build();
 		Account creditAccount = Account.builder().id(2).amount(22.3334).type("Credit").key("2").build();
@@ -61,22 +56,5 @@ public class RedisTransactionThread implements CommandLineRunner {
 
 		System.err.println("*******FINAL OUTPUT ***************");
 		redisMultiThreadTransactionRetryTest.readRedis();
-
-//		callAsync();
-
-	}
-
-
-	@Async
-	public void callAsync() throws InterruptedException {
-		System.out.println("callAsynch called: ");
-		printCalled(10000);
-		printCalled(5000);
-		printCalled(1000);
-	}
-
-	public void printCalled(Integer time) throws InterruptedException {
-		Thread.sleep(time);
-		System.out.println("printCalled: "+time);
 	}
 }

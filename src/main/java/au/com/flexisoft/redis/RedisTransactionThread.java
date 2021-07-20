@@ -71,8 +71,8 @@ public class RedisTransactionThread implements CommandLineRunner {
 
 		CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
 			System.out.println("***********FIRST THREAD CALLED*********");
-			redisTransaction.inTransaction(10000);
-			redisMultiThreadTransactionRetryTest.readRedis();
+			redisTransaction.inTransaction(10000, "FIRST CALL");
+			redisTransaction.readTransaction();
 			System.out.println("***********FIRST THREAD ENDED*********");
 
 			System.out.println("I'll run in a separate thread than the main thread. - 1");
@@ -82,8 +82,8 @@ public class RedisTransactionThread implements CommandLineRunner {
 
 		CompletableFuture<Void> future2 = CompletableFuture.runAsync(() -> {
 			System.out.println("***********SECOND THREAD CALLED*********");
-			redisTransaction.inTransaction(10000);
-			redisMultiThreadTransactionRetryTest.readRedis();
+			redisTransaction.inTransaction(1000, "SECOND CALL");
+			redisTransaction.readTransaction();
 			System.out.println("***********SECOND THREAD ENDED*********");
 			System.out.println("I'll run in a separate thread than the main thread. - 2");
 		});

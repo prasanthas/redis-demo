@@ -19,7 +19,7 @@ public class RedisTransaction {
     }
 
 
-    public void inTransaction(Integer time) {
+    public void inTransaction(Integer time, String methodCall) {
 
         //execute a transaction
         List<Object> txResults = (List<Object>) hashOperation.getRedisTemplate().execute(new SessionCallback<List<Object>>() {
@@ -56,7 +56,7 @@ public class RedisTransaction {
             }
         });
 
-        System.out.println("*********************Number of items added to set: " + txResults.get(0));
+        System.err.println("*********************Number of items added to set: " + txResults.get(0)+ "::::::::"+methodCall);
         txResults.forEach(System.out::println);
 
     }

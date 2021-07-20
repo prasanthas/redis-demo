@@ -1,12 +1,8 @@
 package au.com.flexisoft.redis;
 
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-
-import au.com.flexisoft.redis.Account;
-import au.com.flexisoft.redis.RedisCacheHashOperation;
 
 @Service
 public class RedisMultiThreadTransactionRetryTest {
@@ -60,12 +56,13 @@ public class RedisMultiThreadTransactionRetryTest {
 
     }
 
+//    @Transactional(isolation = Isolation.READ_COMMITTED)
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void populateRedisSecondCall(Account cashAccount, Account creditAccount)  {
         System.out.println("Populate First value");
         Account value = (Account) hashOperation.getValue(cashAccount.getType(), cashAccount.getKey());
 
-        value.setAmount(199.999992);
+        value.setAmount(199.993);
 
         System.err.println("Going to sleep");
 
@@ -84,6 +81,7 @@ public class RedisMultiThreadTransactionRetryTest {
     }
 
     public void readRedis() {
+        System.out.println("Inside readRedis");
         Account cashAccount = Account.builder().id(1).amount(1.1).type("Cash").key("1").build();
         Account creditAccount = Account.builder().id(2).amount(2.2).type("Credit").key("2").build();
 
@@ -91,7 +89,20 @@ public class RedisMultiThreadTransactionRetryTest {
         System.out.println(cashAcc);
 
         Account credAcc = (Account) hashOperation.getValue(creditAccount.getType(), creditAccount.getKey());
-        System.out.println(credAcc);
+//        System.out.println(credAcc);
+
+    }
+
+    public void readRedis(String calledMethod) {
+        System.out.println("###################Inside readRedis called Method:"+calledMethod);
+        Account cashAccount = Account.builder().id(1).amount(1.1).type("Cash").key("1").build();
+        Account creditAccount = Account.builder().id(2).amount(2.2).type("Credit").key("2").build();
+
+        Account cashAcc = (Account) hashOperation.getValue(cashAccount.getType(), cashAccount.getKey());
+        System.out.println(cashAcc);
+
+        Account credAcc = (Account) hashOperation.getValue(creditAccount.getType(), creditAccount.getKey());
+//        System.out.println(credAcc);
 
     }
 

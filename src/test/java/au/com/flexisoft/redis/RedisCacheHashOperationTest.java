@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 //@RunWith(SpringRunner.class)
-@SpringBootTest(classes = TestRedisConfiguration.class)
+//@SpringBootTest(classes = TestRedisConfiguration.class)
 public class RedisCacheHashOperationTest {
 
     @Autowired

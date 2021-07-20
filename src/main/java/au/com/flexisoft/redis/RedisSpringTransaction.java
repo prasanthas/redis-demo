@@ -21,8 +21,8 @@ public class RedisSpringTransaction {
     @Retryable
     @Transactional
     public void performTransactional() {
-        Account cashAccount = Account.builder().id(1).amount(1.2).type("Cash").key("1").build();
-        Account creditAccount = Account.builder().id(2).amount(2.3).type("Credit").key("2").build();
+        Account cashAccount = Account.builder().id(1).amount(1.22).type("Cash").key("1").build();
+        Account creditAccount = Account.builder().id(2).amount(2.32).type("Credit").key("2").build();
 
         System.err.println("About to add to cache: "+ numberOfRetries++);
         hashOperation.putValue(cashAccount.getType(), cashAccount.getKey(), cashAccount);
@@ -46,16 +46,16 @@ public class RedisSpringTransaction {
         creditAccReturned.setAmount(4.2223);
         System.out.println("creditAccReturned.setAmount(2.222);");
 
-        /*try {
+       /* try {
             System.err.println("Entering Sleep");
             Thread.sleep(20000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-        System.err.println("Waking up from Sleep");*/
-        if (true) {
-            throw new RuntimeException("SOmething wrong");
-        }
+        }*/
+        System.err.println("Waking up from Sleep");
+//        if (true) {
+//            throw new RuntimeException("SOmething wrong");
+//        }
 
         hashOperation.putValue(creditAccReturned.getType(), creditAccReturned.getKey(), creditAccReturned);
 

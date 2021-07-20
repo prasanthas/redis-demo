@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class RedisDemoApplication implements CommandLineRunner {
 
 	@Autowired
@@ -55,33 +55,33 @@ public class RedisDemoApplication implements CommandLineRunner {
 
 //		processRedisClientCall();
 
-	/*	try {
+		try {
 			redisSpringTransaction.performTransactional();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("INSIDE CALLING APPs EXCEPTION");
-		}*/
+		}
 
 
-//		redisSpringTransaction.readFromCache();
+		redisSpringTransaction.readFromCache();
 
 		/*******************************************/
 
-//		System.out.println("******************************");
-//		redisTransaction.readTransaction();
-//		System.out.println("************Before Transaction Call***************");
-//		try {
-//			redisTransaction.inTransaction();
-//		} catch (Exception e) {
-//			System.err.println("****EXCEPTION*****");
-//			e.printStackTrace();
-//
-//		}
-//		System.out.println("***********After Transaction Call*************");
-//		redisTransaction.readTransaction();
+		/*System.out.println("******************************");
+		redisTransaction.readTransaction();
+		System.out.println("************Before Transaction Call***************");
+		try {
+			redisTransaction.inTransaction();
+		} catch (Exception e) {
+			System.err.println("****EXCEPTION*****");
+			e.printStackTrace();
 
+		}
+		System.out.println("***********After Transaction Call*************");
+		redisTransaction.readTransaction();
+*/
 
-		retryableCache.retry();
+//		retryableCache.retry();
 
 	}
 }

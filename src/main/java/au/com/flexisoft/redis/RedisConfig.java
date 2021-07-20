@@ -1,6 +1,7 @@
 package au.com.flexisoft.redis;
 
 import java.sql.SQLException;
+import java.util.concurrent.Executor;
 
 import javax.sql.DataSource;
 
@@ -15,6 +16,8 @@ import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.retry.annotation.EnableRetry;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -22,6 +25,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableRetry
+@EnableAsync
 public class RedisConfig {
 
     @Bean
@@ -43,7 +47,8 @@ public class RedisConfig {
 
     @Bean
     public PlatformTransactionManager transactionManager() throws SQLException {
-        return new DataSourceTransactionManager(dataSource());
+        DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager(dataSource());
+        return dataSourceTransactionManager;
     }
 
     @Bean
@@ -55,4 +60,16 @@ public class RedisConfig {
         dataSourceBuilder.password("");
         return dataSourceBuilder.build();
     }
+
+    @Bean (name = "taskExecutor")
+    public Executor taskExecutor() {
+        final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(2);
+        executor.setMaxPoolSize(2);
+        executor.setQueueCapacity(100);
+        executor.setThreadNamePrefix("CarThread-");
+        executor.initialize();
+        return executor;
+    }
+
 }

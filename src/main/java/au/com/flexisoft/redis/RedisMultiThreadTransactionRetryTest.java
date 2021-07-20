@@ -89,7 +89,7 @@ public class RedisMultiThreadTransactionRetryTest {
         System.out.println(cashAcc);
 
         Account credAcc = (Account) hashOperation.getValue(creditAccount.getType(), creditAccount.getKey());
-//        System.out.println(credAcc);
+        System.out.println(credAcc);
 
     }
 

@@ -28,8 +28,8 @@ public class RedisTransactionThread implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		System.out.println("Inside run");
 
-		run1();
-//		run2();
+//		run1();
+		run2();
 	}
 
 	private void run1() throws InterruptedException, ExecutionException {
@@ -81,14 +81,14 @@ public class RedisTransactionThread implements CommandLineRunner {
 
 		CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
 			System.out.println("***********FIRST THREAD CALLED*********");
-			redisTransaction.inTransaction(10000, "FIRST CALL");
+			redisTransaction.inTransaction(1000, "FIRST CALL");
 			redisTransaction.readTransaction();
 			System.out.println("***********FIRST THREAD ENDED*********");
 
 			System.out.println("I'll run in a separate thread than the main thread. - 1");
 		});
 
-		TimeUnit.SECONDS.sleep(1);
+		/*TimeUnit.SECONDS.sleep(1);
 
 		CompletableFuture<Void> future2 = CompletableFuture.runAsync(() -> {
 			System.out.println("***********SECOND THREAD CALLED*********");
@@ -98,10 +98,12 @@ public class RedisTransactionThread implements CommandLineRunner {
 			System.out.println("I'll run in a separate thread than the main thread. - 2");
 		});
 
-		future2.get();
+		future2.get();*/
 		future1.get();
 
+		TimeUnit.SECONDS.sleep(2);
 		System.err.println("*******FINAL OUTPUT ***************");
-		redisMultiThreadTransactionRetryTest.readRedis();
+//		redisMultiThreadTransactionRetryTest.readRedis();
+		redisTransaction.readTransaction();
 	}
 }

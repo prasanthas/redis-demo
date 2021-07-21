@@ -23,6 +23,10 @@ public class RedisValueOperationsCache<T> {
         valueOperations.set(key, value, timeout, unit);
     }
 
+    public void put(String key, T value) {
+        valueOperations.set(key, value);
+    }
+
     public void putValueWithExpireTime(String key, T value, Duration duration) {
         valueOperations.set(key, value, duration);
     }

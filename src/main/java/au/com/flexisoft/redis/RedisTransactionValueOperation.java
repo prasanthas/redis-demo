@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.SessionCallback;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 public class RedisTransactionValueOperation {
@@ -27,6 +28,8 @@ public class RedisTransactionValueOperation {
     public void transaction1(Integer time, String methodCall) {
         System.err.println("transaction1 CALLED times: "+ ++transaction1);
         final String KEY = "1";
+        Account value = redisValueOperationsCache.getValue(KEY);
+        System.out.println("transaction2 - RETRIEVED value: "+value);
 
         List<Object> txResults = (List<Object>) redisValueOperationsCache.getRedisTemplate().execute(new SessionCallback() {
             @Override
@@ -39,10 +42,11 @@ public class RedisTransactionValueOperation {
                 ValueOperations<String, Account> valueOperations = operations.opsForValue();
 
                 Account account = valueOperations.get(KEY);
+                System.out.println("transaction1 - RETRIEVED account: "+account);
                 if (account == null) {
                     account = cash;
                 }
-                account.setAmount(1.22);
+                account.setAmount(1.35);
 
                 try {
                     System.err.println("transaction1-CALLING SLEEP - 1");
@@ -57,9 +61,9 @@ public class RedisTransactionValueOperation {
                 List exec = operations.exec();
                 System.out.println("transaction1 - End Of Execute:exec::" + exec);
 
-                /*if (CollectionUtils.isEmpty(exec)) {
+                if (CollectionUtils.isEmpty(exec)) {
                     throw new RuntimeException("Didin't commit");
-                }*/
+                }
 
                 return exec;
             }
@@ -71,6 +75,9 @@ public class RedisTransactionValueOperation {
     public void transaction2(Integer time, String methodCall) {
         System.err.println("transaction2 CALLED times: "+ ++transaction2);
         final String KEY = "1";
+        Account value = redisValueOperationsCache.getValue(KEY);
+        System.out.println("transaction2 - RETRIEVED value: "+value);
+
 
         List<Object> txResults = (List<Object>) redisValueOperationsCache.getRedisTemplate().execute(new SessionCallback() {
             @Override
@@ -83,10 +90,11 @@ public class RedisTransactionValueOperation {
                 ValueOperations<String, Account> valueOperations = operations.opsForValue();
 
                 Account account = valueOperations.get(KEY);
+                System.out.println("transaction2 - RETRIEVED account: "+account);
                 if (account == null) {
                     account = cash;
                 }
-                account.setAmount(1.12);
+                account.setAmount(1.17);
 
                 try {
                     System.err.println("transaction2-CALLING SLEEP - 1");
@@ -100,9 +108,9 @@ public class RedisTransactionValueOperation {
 
                 List exec = operations.exec();
                 System.out.println("transaction2 - End Of Execute:exec:" + exec);
-                /*if (CollectionUtils.isEmpty(exec)) {
+                if (CollectionUtils.isEmpty(exec)) {
                     throw new RuntimeException("Didin't commit");
-                }*/
+                }
                 return exec;
             }
         });
@@ -113,7 +121,7 @@ public class RedisTransactionValueOperation {
 
         Stream.of(keys).forEach(key -> {
             Account value = redisValueOperationsCache.getValue(key);
-            System.out.println(value);
+            System.out.println("RRRR:::"+value);
         });
 
     }

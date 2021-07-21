@@ -1,6 +1,0 @@
-au/com/flexisoft/redis/TestRedisConfiguration.java
- au.com.flexisoft.redis.TestRedisConfiguration
-au/com/flexisoft/redis/RedisProperties.java
- au.com.flexisoft.redis.RedisProperties
-au/com/flexisoft/redis/RedisCacheHashOperationTest.java
- au.com.flexisoft.redis.RedisCacheHashOperationTest

@@ -28,8 +28,6 @@ public class RedisTransactionValueOperation {
     public void transaction1(Integer time, String methodCall, Double amount) {
         System.err.println("transaction1 CALLED times: "+ ++transaction1);
         final String KEY = "1";
-//        Account value = redisValueOperationsCache.getValue(KEY);
-//        System.out.println("transaction2 - RETRIEVED value: "+value);
 
         List<Object> txResults = (List<Object>) redisValueOperationsCache.getRedisTemplate().execute(new SessionCallback() {
             @Override
@@ -38,15 +36,7 @@ public class RedisTransactionValueOperation {
                 Account account = redisValueOperationsCache.getValue(KEY);
                 System.out.println("transaction1-Watch Called");
                 operations.multi();
-//                ValueOperations<String, Account> valueOperations = operations.opsForValue();
-
-//                Account account = valueOperations.get(KEY);
-//                Account account = redisValueOperationsCache.getValue(KEY);
                 System.out.println("transaction1 - RETRIEVED account: "+account);
-                /*if (account == null) {
-                    account = value;
-                }*/
-
                 try {
                     System.err.println("transaction1-CALLING SLEEP - 1");
                     Thread.sleep(time);
@@ -57,10 +47,8 @@ public class RedisTransactionValueOperation {
 
                 account.setAmount(amount);
                 redisValueOperationsCache.put(KEY, account);
-//                valueOperations.set(KEY, account, 1000, TimeUnit.MINUTES);
 
                 List exec = operations.exec();
-//                System.out.println("transaction1 - End Of Execute:exec::" + exec);
 
                 if (CollectionUtils.isEmpty(exec)) {
                     System.err.println("****FAILED ****************:"+amount);
@@ -73,52 +61,6 @@ public class RedisTransactionValueOperation {
             }
         });
         System.out.println("transaction1 -  txResult:"+txResults);
-    }
-
-    @Retryable
-    public void transaction2(Integer time, String methodCall) {
-        System.err.println("transaction2 CALLED times: "+ ++transaction2);
-        final String KEY = "1";
-        Account value = redisValueOperationsCache.getValue(KEY);
-        System.out.println("transaction2 - RETRIEVED value: "+value);
-
-
-        List<Object> txResults = (List<Object>) redisValueOperationsCache.getRedisTemplate().execute(new SessionCallback() {
-            @Override
-            public Object execute(RedisOperations operations) throws DataAccessException {
-                Account cash = Account.builder().type("cash").key(KEY).id(1).amount(1.1).build();
-
-                operations.watch(KEY);
-                System.out.println("transaction2-Watch Called");
-                operations.multi();
-                ValueOperations<String, Account> valueOperations = operations.opsForValue();
-
-                Account account = valueOperations.get(KEY);
-                System.out.println("transaction2 - RETRIEVED account: "+account);
-                if (account == null) {
-                    account = cash;
-                }
-                account.setAmount(1.18);
-
-                try {
-                    System.err.println("transaction2-CALLING SLEEP - 1");
-                    Thread.sleep(time);
-                    System.err.println("transaction2-END OF SLEEP - 1");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                valueOperations.set(KEY, account, 1000, TimeUnit.MINUTES);
-
-                List exec = operations.exec();
-                System.out.println("transaction2 - End Of Execute:exec:" + exec);
-                if (CollectionUtils.isEmpty(exec)) {
-                    throw new RuntimeException("Didin't commit");
-                }
-                return exec;
-            }
-        });
-        System.out.println("transaction2 -  txResult:"+txResults);
     }
 
     public void readTransaction(String... keys) {

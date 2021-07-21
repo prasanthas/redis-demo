@@ -7,9 +7,8 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class RedisTransactionThread implements CommandLineRunner {
 
 	@Autowired
@@ -81,24 +80,22 @@ public class RedisTransactionThread implements CommandLineRunner {
 
 		CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
 			System.out.println("***********FIRST THREAD CALLED*********");
-			redisTransaction.inTransaction(1000, "FIRST CALL");
+			redisTransaction.inTransaction(10000, "FIRST CALL");
 			redisTransaction.readTransaction();
 			System.out.println("***********FIRST THREAD ENDED*********");
-
-			System.out.println("I'll run in a separate thread than the main thread. - 1");
 		});
 
-		/*TimeUnit.SECONDS.sleep(1);
+		TimeUnit.SECONDS.sleep(2);
 
 		CompletableFuture<Void> future2 = CompletableFuture.runAsync(() -> {
 			System.out.println("***********SECOND THREAD CALLED*********");
-			redisTransaction.inTransaction(1000, "SECOND CALL");
+			redisTransaction.inTransactionCall2(1000, "SECOND CALL");
 			redisTransaction.readTransaction();
 			System.out.println("***********SECOND THREAD ENDED*********");
 			System.out.println("I'll run in a separate thread than the main thread. - 2");
 		});
 
-		future2.get();*/
+		future2.get();
 		future1.get();
 
 		TimeUnit.SECONDS.sleep(2);

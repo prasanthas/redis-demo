@@ -1,5 +1,7 @@
 au/com/flexisoft/redis/RedisSpringBootApplication.java
  au.com.flexisoft.redis.RedisSpringBootApplication
+au/com/flexisoft/redis/RedisTransactionValueOperationTest.java
+ au.com.flexisoft.redis.RedisTransactionValueOperationTest
 au/com/flexisoft/redis/AccountRepository.java
  au.com.flexisoft.redis.AccountRepository
 au/com/flexisoft/redis/RedisTransactionThread.java
@@ -11,6 +13,7 @@ au/com/flexisoft/redis/MultiThreadService.java
 au/com/flexisoft/redis/RedisTransaction.java
  au.com.flexisoft.redis.RedisTransaction
  au.com.flexisoft.redis.RedisTransaction$1
+ au.com.flexisoft.redis.RedisTransaction$2
 au/com/flexisoft/redis/RedisValueOperationsCache.java
  au.com.flexisoft.redis.RedisValueOperationsCache
 au/com/flexisoft/redis/RedisDemoApplication.java
@@ -28,3 +31,7 @@ au/com/flexisoft/redis/RedisSpringTransaction.java
  au.com.flexisoft.redis.RedisSpringTransaction
 au/com/flexisoft/redis/RedisCacheHashOperation.java
  au.com.flexisoft.redis.RedisCacheHashOperation
+au/com/flexisoft/redis/RedisTransactionValueOperation.java
+ au.com.flexisoft.redis.RedisTransactionValueOperation
+ au.com.flexisoft.redis.RedisTransactionValueOperation$1
+ au.com.flexisoft.redis.RedisTransactionValueOperation$2

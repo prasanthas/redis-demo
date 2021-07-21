@@ -31,9 +31,6 @@ public class RedisTransactionValueOperationTest implements CommandLineRunner {
 
 
 	private void run1() throws InterruptedException, ExecutionException {
-		Account cashAccount = Account.builder().id(1).amount(11.1112).type("Cash").key("1").build();
-		Account creditAccount = Account.builder().id(2).amount(22.3334).type("Credit").key("2").build();
-
 		CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
 			System.out.println("***********FIRST THREAD CALLED*********");
 			redis.transaction1(10000, "FIRST CALL");

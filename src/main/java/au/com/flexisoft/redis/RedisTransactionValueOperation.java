@@ -42,7 +42,7 @@ public class RedisTransactionValueOperation {
                 if (account == null) {
                     account = cash;
                 }
-                account.setAmount(1.11);
+                account.setAmount(1.22);
 
                 try {
                     System.err.println("transaction1-CALLING SLEEP - 1");
@@ -86,7 +86,7 @@ public class RedisTransactionValueOperation {
                 if (account == null) {
                     account = cash;
                 }
-                account.setAmount(1.11);
+                account.setAmount(1.12);
 
                 try {
                     System.err.println("transaction2-CALLING SLEEP - 1");

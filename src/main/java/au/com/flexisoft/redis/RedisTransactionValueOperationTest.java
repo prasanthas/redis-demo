@@ -25,15 +25,14 @@ public class RedisTransactionValueOperationTest implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		System.out.println("Inside run");
 
+//		populate();
 		run1();
 	}
-
-
 
 	private void run1() throws InterruptedException, ExecutionException {
 		CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
 			System.out.println("***********FIRST THREAD CALLED*********");
-			redis.transaction1(10000, "FIRST CALL", 1.13);
+			redis.transaction1(10000, "FIRST CALL", 1.13, 222.222);
 			redis.readTransaction("1");
 			System.out.println("***********FIRST THREAD ENDED*********");
 		});
@@ -42,7 +41,7 @@ public class RedisTransactionValueOperationTest implements CommandLineRunner {
 
 		CompletableFuture<Void> future2 = CompletableFuture.runAsync(() -> {
 			System.out.println("***********SECOND THREAD CALLED*********");
-			redis.transaction1(1, "SECOND CALL", 50.2);
+			redis.transaction1(1, "SECOND CALL", 50.2, 777.777);
 			redis.readTransaction("1");
 			System.out.println("***********SECOND THREAD ENDED*********");
 			System.out.println("I'll run in a separate thread than the main thread. - 2");
@@ -56,4 +55,9 @@ public class RedisTransactionValueOperationTest implements CommandLineRunner {
 //		redisMultiThreadTransactionRetryTest.readRedis();
 //		redisTransaction.readTransaction();
 	}
+
+	private void populate() {
+		redis.pupulateRedis();
+	}
+
 }
